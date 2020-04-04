@@ -2,6 +2,8 @@
 
 KernelEdges::KernelEdges (void)
 {
+    total = 4;
+
     int vertical[9] = 
     {
         -1, -2, -1, 
@@ -34,25 +36,18 @@ KernelEdges::KernelEdges (void)
         -2, -1,  0,  1,  2
     };
 
-    vertical3x3 = new Kernel( vertical, 9 );
-    horizontal3x3 = new Kernel( horizontal, 9 );
-    vertical5x5 = new Kernel( vertical2, 25 );
-    horizontal5x5 = new Kernel( horizontal2, 25 );
+    vertical3x3.set( vertical, 9 );
+    horizontal3x3.set( horizontal, 9 );
+    vertical5x5.set( vertical2, 25 );
+    horizontal5x5.set( horizontal2, 25 );
 }
 
-KernelEdges::~KernelEdges (void)
-{
-    delete vertical3x3;
-    delete vertical5x5;
-    delete horizontal3x3;
-    delete horizontal5x5;
-}
+KernelEdges::~KernelEdges (void){}
 
 void KernelEdges::print (void) const
 {
-    vertical3x3-> print();
-    horizontal3x3-> print();
-    vertical5x5-> print();
-    horizontal5x5-> print();
-
+    vertical3x3.print();
+    horizontal3x3.print();
+    vertical5x5.print();
+    horizontal5x5.print();
 }

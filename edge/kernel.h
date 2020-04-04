@@ -9,8 +9,8 @@ class Kernel
 {
     public:
         Kernel (void);
-        Kernel (int* data, size_t size);
         ~Kernel (void);
+        void set(int* data, size_t size);
         void print (void) const;
         int & operator [] (size_t index);
 

@@ -2,12 +2,15 @@
 
 Kernel::Kernel (void)
 {
-    this-> data_ = new int[0];
+    this-> data_; //= new int[0];
     this-> size_ = 0;
 }
 
-Kernel::Kernel (int* data, size_t size)
+void Kernel::set (int* data, size_t size)
 {
+    if( data_ )
+        delete[] data_;
+
     this-> size_ = size;
     this-> data_ = new int[size_];
 
@@ -17,10 +20,7 @@ Kernel::Kernel (int* data, size_t size)
     }
 }
 
-Kernel::~Kernel (void)
-{
-    delete[] data_;
-}
+Kernel::~Kernel (void) {}
 
 int & Kernel::operator [] (size_t index)
 {

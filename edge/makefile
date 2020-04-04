@@ -1,14 +1,19 @@
-compile: main.o kernel.o edge.o
-	g++ main.o kernel.o edge.o -o edge
+VERSION = -std=c++11
+
+compile: clean main.o kernel.o edge.o iterator.o
+	g++ $(VERSION) main.o kernel.o edge.o iterator.o -o edge
 
 main.o: main.cpp
-	g++ -c main.cpp
+	g++ $(VERSION) -c main.cpp
 
 kernel.o: kernel.cpp kernel.h
-	g++ -c kernel.cpp
+	g++ $(VERSION) -c kernel.cpp
 
 edge.o: edge.cpp edge.h
-	g++ -c edge.cpp
+	g++ $(VERSION) -c edge.cpp
+
+iterator.o: iterator.cpp iterator.h
+	g++ $(VERSION) -c iterator.cpp
 
 run: edge
 	./edge

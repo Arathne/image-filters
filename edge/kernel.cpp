@@ -6,31 +6,50 @@ Kernel::Kernel (void)
     this-> size_ = 0;
 }
 
-void Kernel::set (int* data, size_t size)
+void Kernel::set (int* data, size_t kernel_size)
 {
-    this-> size_ = size;
-    this-> data_ = new int[size_];
+    this-> size_ = kernel_size;
+    
+    this-> data_ = new int*[size_];
+    for(int i = 0; i < size_; i++)
+        data_[i] = new int[size_];
 
-    for( int i = 0; i < size_; i++ )
+
+    int index = 0;
+    for( int r = 0; r < size_; r++ )
     {
-        this-> data_[i] = data[i];
+        for( int c = 0;  c < size_; c++ )
+        {
+            this-> data_[r][c] = data[index];
+            index++;
+        }
     }
+}
+
+int Kernel::getData (int row, int col)
+{
+    if( row >= size_ || col >= size_ )
+        throw std::out_of_range( "kernel :: out of bounds" );
+    
+    return data_[row][col];
+}
+
+int Kernel::getSize (void)
+{
+    return size_;
 }
 
 Kernel::~Kernel (void) {}
 
-int & Kernel::operator [] (size_t index)
-{
-    if( index >= size_ )
-        throw std::out_of_range( "kernel :: index out of bounds" );
-
-    return *( data_+index );
-}
-
 void Kernel::print (void) const
 {
-    for( int i = 0; i < size_; i++ )
-        std::cout << data_[i] << " ";
-
+    for( int r = 0; r < size_; r++ )
+    {
+        for( int c = 0; c < size_; c++ )
+        {
+            std::cout << data_[r][c] << " ";
+        }
+        std::cout << std::endl;
+    }
     std::cout << std::endl;
 }

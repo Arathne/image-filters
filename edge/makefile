@@ -1,4 +1,4 @@
-VERSION = -std=c++11
+VERSION = -std=c++11 -g
 
 compile: clean main.o kernel.o edge.o iterator.o image.o
 	g++ $(VERSION) main.o kernel.o edge.o iterator.o image.o -o edge

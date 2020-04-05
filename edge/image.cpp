@@ -23,6 +23,7 @@ void Image::initialize (void)
     green = new unsigned char*[height];
     blue = new unsigned char*[height];
     gray = new unsigned char*[height];
+    edited = new int*[height];
     
     for( int r = 0; r < height; r++ )
     {
@@ -30,6 +31,7 @@ void Image::initialize (void)
         green[r] = new unsigned char[width];
         blue[r] = new unsigned char[width];
         gray[r] = new unsigned char[width];
+        edited[r] = new int[width];
     }
 }
 
@@ -56,42 +58,51 @@ void Image::resetOut (void)
 {
     for( int i = 0; i < height*width*3; i++ )
     {
-        out[i] = 0;
+        out[i] = 127;
+    }
+}
+
+void Image::sobel (Kernel filter, int size)
+{
+    for( int r = (size/2); r < height-(size/2); r++ )
+    {
+        for( int c = (size/2); c < width-(size/2); c++ )
+        {
+            
+            sobelCalc( filter, r, c, size );
+        }
+    }
+}
+
+void Image::sobelCalc ( Kernel filter, int row, int col, int size )
+{
+    int upperBound = size/2;
+    int lowerBound = upperBound*-1;
+    int previous = 0;
+    for( int i = lowerBound; i <= upperBound; i++ )
+    {
+        for( int j = lowerBound; j <= upperBound; j++ )
+        {
+            edited[row][col] = (gray[row+i][col+j] * filter.getData(i+upperBound,j+upperBound)) + previous;
+            previous = edited[row][col];
+        }
     }
 }
 
 void Image::print (void)
 {
-    /*for( int r = 0; r < height; r++ )
+    for( int r = 0; r <= 5; r++ )
     {
-        for( int c = 0; c < width; c++ )
+        for( int c = 0; c <= 5; c++ )
         {
-            std::cout << (int) red[r][c] << std::endl;
+            std::cout << edited[r][c] << " ";
         }
-    }*/
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*unsigned char* Image::getRed (void)
+unsigned char* Image::output (void)
 {
     resetOut();
 
@@ -100,7 +111,7 @@ void Image::print (void)
     {
         for( int c = 0; c < width; c++ )
         {
-            unsigned char color = gray[r][c];
+            unsigned char color = (char) edited[r][c] + 127;
             out[index] = color;
             out[index+(height*width)] = color;
             out[index+(height*width*2)] = color;
@@ -109,4 +120,4 @@ void Image::print (void)
     }
     
     return out;
-}*/
+}

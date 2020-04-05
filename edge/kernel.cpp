@@ -2,15 +2,12 @@
 
 Kernel::Kernel (void)
 {
-    this-> data_; //= new int[0];
+    this-> data_ = nullptr;
     this-> size_ = 0;
 }
 
 void Kernel::set (int* data, size_t size)
 {
-    if( data_ )
-        delete[] data_;
-
     this-> size_ = size;
     this-> data_ = new int[size_];
 

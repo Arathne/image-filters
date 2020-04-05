@@ -14,7 +14,7 @@ KernelIterator::KernelIterator (void)
 
 KernelIterator::~KernelIterator (void)
 {
-    delete[] kernels_;
+    //delete[] kernels_;
 }
 
 void KernelIterator::first()

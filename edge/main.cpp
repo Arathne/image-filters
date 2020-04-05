@@ -13,9 +13,14 @@ FILE* out_file;
 
 int main()
 {
+    src_file = fopen( "flower.raw", "rb" );
+    Image image(500, 500);   
+    image.setData( src_file );
+    fclose(src_file);
     
-
-
+    /*out_file = fopen( "flowerGRAY.raw", "wb" );
+    fwrite( image.getRed(), 1, 500*500*3, out_file );
+    fclose( out_file )*/
 
     KernelIterator filters;
     
